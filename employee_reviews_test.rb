@@ -147,4 +147,15 @@ class EmployeeReviews < Minitest::Test
     a.add_employee(employee3)
     assert_equal 3, a.number_of_employees
   end
+
+  def test_department_lowest_paid_employee
+    a = Department.create!(name: "Marketing")
+    employee1 = Employee.create!(name: "Xavier", email: "ProfX@marvel.com", phone: "911", salary: 70000.00)
+    employee2 = Employee.create!(name: "Dan", email: "d@mail.com", phone: "914-555-5555", salary: 50000.00)
+    employee3 = Employee.create!(name: "Yvonne", email: "Yvonne@urFired.com", phone: "919-123-4567", salary: 40000.00)
+    a.add_employee(employee1)
+    a.add_employee(employee2)
+    a.add_employee(employee3)
+    assert_equal 40000.00, a.lowest_paid_employee.salary
+  end
 end

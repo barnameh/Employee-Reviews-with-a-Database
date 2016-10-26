@@ -24,4 +24,9 @@ class Department < ActiveRecord::Base
     amount = alloted_amount / raise_eligible.length
     raise_eligible.each {|e| e.raise_by_amount(amount)}
   end
+
+  def lowest_paid_employee
+    Employee.where(department_id: self.id).order(:salary).first
+  end
+
 end
