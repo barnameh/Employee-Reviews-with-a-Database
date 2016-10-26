@@ -11,6 +11,10 @@ class Department < ActiveRecord::Base
     Employee.where(department_id: self.id).to_a
   end
 
+  def number_of_employees
+    staff.size
+  end
+
   def department_salary
     staff.reduce(0.0) {|sum, e| sum + e.salary}
   end

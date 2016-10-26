@@ -97,7 +97,7 @@ class EmployeeReviews < Minitest::Test
 
   def test_department_raises_based_on_criteria
     a = Department.create!(name: "Marketing")
-    xavier = Employee.creat!(name: "Xavier", email: "ProfX@marvel.com", phone: "911", salary: 70000.00)
+    xavier = Employee.create!(name: "Xavier", email: "ProfX@marvel.com", phone: "911", salary: 70000.00)
     new_employee = Employee.create!(name: "Dan", email: "d@mail.com", phone: "914-555-5555", salary: 50000.00)
     old_employee = Employee.create!(name: "Yvonne", email: "Yvonne@urFired.com", phone: "919-123-4567", salary: 40000.00)
     a.add_employee(xavier)
@@ -107,8 +107,11 @@ class EmployeeReviews < Minitest::Test
     new_employee.set_employee_performance(true)
     old_employee.set_employee_performance(false)
     a.department_raise(14000.00) {|e| e.satisfactory == true && e.salary < 60000.00}
+    xavier.reload
     assert_equal 70000.00, xavier.salary
+    new_employee.reload
     assert_equal 64000.00, new_employee.salary
+    old_employee.reload
     assert_equal 40000.00, old_employee.salary
   end
 
@@ -132,5 +135,16 @@ class EmployeeReviews < Minitest::Test
 
   private def positive_review_two
     "Wanda has been an incredibly consistent and effective developer.  Clients are always satisfied with her work, developers are impressed with her productivity, and she's more than willing to help others even when she has a substantial workload of her own.  She is a great asset to Awesome Company, and everyone enjoys working with her.  During the past year, she has largely been devoted to work with the Cement Company, and she is the perfect woman for the job.  We know that work on a single project can become monotonous, however, so over the next few months, we hope to spread some of the Cement Company work to others.  This will also allow Wanda to pair more with others and spread her effectiveness to other projects."
+  end
+
+  def test_department_number_of_employees
+    a = Department.create!(name: "Marketing")
+    employee1 = Employee.create!(name: "Xavier", email: "ProfX@marvel.com", phone: "911", salary: 70000.00)
+    employee2 = Employee.create!(name: "Dan", email: "d@mail.com", phone: "914-555-5555", salary: 50000.00)
+    employee3 = Employee.create!(name: "Yvonne", email: "Yvonne@urFired.com", phone: "919-123-4567", salary: 40000.00)
+    a.add_employee(employee1)
+    a.add_employee(employee2)
+    a.add_employee(employee3)
+    assert_equal 3, a.number_of_employees
   end
 end
