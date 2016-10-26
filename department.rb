@@ -29,4 +29,8 @@ class Department < ActiveRecord::Base
     Employee.where(department_id: self.id).order(:salary).first
   end
 
+  def employees_ordered_by_name
+    Employee.where(department_id: self.id).order(:name).to_a
+  end
+
 end
