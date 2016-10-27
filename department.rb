@@ -33,4 +33,9 @@ class Department < ActiveRecord::Base
     Employee.where(department_id: self.id).order(:name).to_a
   end
 
+  def employees_paid_more_than_average
+    average_salary = Employee.average(:salary)
+    Employee.where("salary > ?", average_salary).to_a
+  end
+
 end

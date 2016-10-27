@@ -173,4 +173,16 @@ class EmployeeReviews < Minitest::Test
     assert_equal employee3, a.employees_ordered_by_name[2]
   end
 
+  def test_department_employees_paid_more_than_average
+    a = Department.create!(name: "Marketing")
+    employee1 = Employee.create!(name: "Xavier", email: "ProfX@marvel.com", phone: "911", salary: 70000.00)
+    employee2 = Employee.create!(name: "Dan", email: "d@mail.com", phone: "914-555-5555", salary: 50000.00)
+    employee3 = Employee.create!(name: "Yvonne", email: "Yvonne@urFired.com", phone: "919-123-4567", salary: 40000.00)
+    a.add_employee(employee1)
+    a.add_employee(employee2)
+    a.add_employee(employee3)
+
+    assert_equal "Xavier", a.employees_paid_more_than_average[0].name
+  end
+
 end
